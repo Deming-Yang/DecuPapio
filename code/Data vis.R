@@ -1,0 +1,299 @@
+library(corrplot)
+library(scales)
+library(viridisLite)
+library(ggplot2)
+
+# Functional vs guiding within the same tooth
+
+fill.10<-viridis_pal()(10)
+
+## Plots in the main text ##
+# Figure 8 Box plots
+par(mfrow=c(2,2)) #800X760
+
+boxplot(B.KI ~ Tooth, data = papio.up.dat,
+        ylim=c(0,3), col=NULL, main = "Upper Buccal", ylab = "lnKI")
+stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(L.KI ~ Tooth, data = papio.up.dat,
+        ylim=c(0,3), col=NULL, main = "Upper Lingual", ylab = "lnKI")
+stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(B.KI ~ Tooth, data = papio.low.dat,
+        ylim=c(0,3), col=NULL, main = "Lower Buccal", ylab = "lnKI")
+stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(L.KI ~ Tooth, data = papio.low.dat,
+        ylim=c(0,3), col=NULL, main = "Lower Lingual", ylab = "lnKI")
+stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+legend("topright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.3)
+
+
+## Figure 9A
+# comparison between functional and guiding sides
+par(mfrow=c(2,2)) #800X760
+# upper K index
+plot(papio.UM1$B.KI, papio.UM1$L.KI,
+     xlim=c(0,3),ylim=c(0,3),pch=18,col=fill.10[2],cex=1.6,
+     main = "Upper", xlab = "Guiding lnKI", ylab = "Functional lnKI")
+abline(a=0,b=1)
+points(papio.UM2$B.KI, papio.UM2$L.KI,
+       pch=18,col=fill.10[5],cex=1.6)
+points(papio.UM3$B.KI, papio.UM3$L.KI,
+       pch=18,col=fill.10[8],cex=1.6)
+
+# Lower K index
+plot(papio.LM1$L.KI, papio.LM1$B.KI,
+     xlim=c(0,3),ylim=c(0,3),pch=18,col=fill.10[2],cex=1.6,
+     main = "Lower", xlab = "Guiding lnKI", ylab = "Functional lnKI")
+abline(a=0,b=1)
+points(papio.LM2$L.KI, papio.LM2$B.KI,
+       pch=18,col=fill.10[5],cex=1.6)
+points(papio.LM3$L.KI, papio.LM3$B.KI,
+       pch=18,col=fill.10[8],cex=1.6)
+legend("bottomright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
+
+
+## Figure 9B
+# upper
+KI <- c(papio.up.dat$B.KI, papio.up.dat$L.KI)
+Cusp <- c(rep("Guiding", 31), rep("Functional", 31))
+
+Upper.KI <- data.frame(KI, Cusp)
+
+boxplot(KI ~ Cusp , data = Upper.KI,
+        ylim=c(0,3),col=NULL, main = "Upper", ylab = "lnKI")
+
+for(i in 1: nrow(papio.up.dat)){
+        lines(x= c(1:2), y = c(papio.up.dat$L.KI[i],papio.up.dat$B.KI[i]),col="gray60")
+}
+points (x = rep(1, nrow(papio.up.dat)), y = papio.up.dat$L.KI, col = "blue", pch = 16)
+points (x = rep(2, nrow(papio.up.dat)), y = papio.up.dat$B.KI, col = "red", pch = 16)
+
+
+# lower
+KI <- c(papio.low.dat$L.KI, papio.low.dat$B.KI)
+Cusp <- c(rep("Guiding", 29), rep("Functional", 29))
+
+Lower.KI <- data.frame(KI, Cusp)
+
+boxplot(KI ~ Cusp, data = Lower.KI,
+        ylim=c(0,3),col=NULL, main = "Lower", ylab = "lnKI")
+
+for(i in 1: nrow(papio.low.dat)){
+        lines(x= c(1:2), y = c(papio.low.dat$B.KI[i],papio.low.dat$L.KI[i]),col="gray60")
+}
+points (x = rep(1, nrow(papio.low.dat)), y = papio.low.dat$B.KI, col = "blue", pch = 16)
+points (x = rep(2, nrow(papio.low.dat)), y = papio.low.dat$L.KI, col = "red", pch = 16)
+legend("topright", legend=c("Functional","Guiding"), pch=16, col=c("blue", "red"))
+
+
+
+
+##Fig 10 upper vs lower 
+par(mfrow=c(1,2)) #800X600
+# functional side
+KI <- c(papio.up.dat$L.KI, papio.low.dat$B.KI)
+Side <- c(rep("Upper", nrow(papio.up.dat)), rep("Lower", nrow(papio.low.dat)))
+
+UvL.F.KI <- data.frame(KI, Side)
+
+boxplot(KI ~ Side, data = UvL.F.KI,
+        ylim=c(0,3),col=NULL, main = "Functional cusps", ylab = "lnKI")
+stripchart(KI ~ Side, vertical = TRUE, data = UvL.F.KI,
+           method = "jitter", add = TRUE, pch = 16, col = c("blue","red"))
+
+# Guiding cusps
+KI <- c(papio.up.dat$B.KI, papio.low.dat$L.KI)
+Side <- c(rep("Upper", nrow(papio.up.dat)), rep("Lower", nrow(papio.low.dat)))
+
+UvL.G.KI <- data.frame(KI, Side)
+
+boxplot(KI ~ Side, data = UvL.G.KI,
+        ylim=c(0,3),col=NULL, main = "Guiding cusps", ylab = "lnKI")
+stripchart(KI ~ Side, vertical = TRUE, data = UvL.G.KI,
+           method = "jitter", add = TRUE, pch = 16, col = c("blue","red"))
+legend("topleft", legend=c("Lower","Upper"), pch=16, col=c("blue", "red"))
+
+################## other figures #########################
+# comparison between functional and guiding sides
+par(mfrow=c(2,2)) #800X600
+# upper Diazone K
+plot(papio.UM1$B.Dia.K, papio.UM1$L.Dia.K,
+     xlim=c(0.3,1.8),ylim=c(0.3,1.8),pch=18,col=fill.10[2],cex=2,
+     main = "Upper Diazone K", xlab = "Guiding", ylab = "Functional")
+abline(a=0,b=1)
+points(papio.UM2$B.Dia.K, papio.UM2$L.Dia.K,
+       pch=18,col=fill.10[5],cex=2)
+points(papio.UM3$B.Dia.K, papio.UM3$L.Dia.K,
+       pch=18,col=fill.10[8],cex=2)
+legend("topleft", legend=c("UM1","UM2","UM3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
+
+# upper parazone K
+plot(papio.UM1$B.Para.K, papio.UM1$L.Para.K,
+     xlim=c(0,0.5),ylim=c(0,0.5),pch=18,col=fill.10[2],cex=2,
+     main = "Upper Parazone K", xlab = "Guiding", ylab = "Functional")
+abline(a=0,b=1)
+points(papio.UM2$B.Para.K, papio.UM2$L.Para.K,
+       pch=18,col=fill.10[5],cex=2)
+points(papio.UM3$B.Para.K, papio.UM3$L.Para.K,
+       pch=18,col=fill.10[8],cex=2)
+
+# Lower Diazone K
+plot(papio.LM1$L.Dia.K, papio.LM1$B.Dia.K,
+     xlim=c(0.3,1.8),ylim=c(0.3,1.8),pch=18,col=fill.10[2],cex=2,
+     main = "Lower Diazone K", xlab = "Guiding", ylab = "Functional")
+abline(a=0,b=1)
+points(papio.LM2$L.Dia.K, papio.LM2$B.Dia.K,
+       pch=18,col=fill.10[5],cex=2)
+points(papio.LM3$L.Dia.K, papio.LM3$B.Dia.K,
+       pch=18,col=fill.10[8],cex=2)
+legend("topleft", legend=c("LM1","LM2","LM3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
+
+# Lower parazone K
+plot(papio.LM1$L.Para.K, papio.LM1$B.Para.K,
+     xlim=c(0,0.5),ylim=c(0,0.5),pch=18,col=fill.10[2],cex=2,
+     main = "Lower Parazone K", xlab = "Guiding", ylab = "Functional")
+abline(a=0,b=1)
+points(papio.LM2$L.Para.K, papio.LM2$B.Para.K,
+       pch=18,col=fill.10[5],cex=2)
+points(papio.LM3$L.Para.K, papio.LM3$B.Para.K,
+       pch=18,col=fill.10[8],cex=2)
+
+
+
+
+# K values
+# Functional diazone upper
+par(mfrow=c(2,2)) #800X600
+boxplot(L.Dia.K ~ Tooth, data = h.up.dat,
+        main = "Metameric trend: Upper Func Diazone K")
+stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = h.up.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
+
+# Guiding diazone upper
+boxplot(B.Dia.K ~ Tooth, data = h.up.dat,
+        main = "Metameric trend: Upper Guid Diazone K")
+stripchart(B.Dia.K ~ Tooth, vertical = TRUE, data = h.up.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
+
+# Functional diazone lower
+boxplot(B.Dia.K ~ Tooth, data = h.low.dat,
+        main = "Metameric trend: Lower Func Diazone K")
+stripchart(B.Dia.K ~ Tooth, vertical = TRUE, data = h.low.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
+
+# Guiding diazone lower
+boxplot(L.Dia.K ~ Tooth, data = h.low.dat,
+        main = "Metameric trend: Lower Guid Diazone K")
+stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = h.low.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
+
+# plots in supplementary
+# Diazone and parazone width
+
+boxplot(L.Dia.W ~ Tooth, data = h.up.dat,
+        main = "Metameric trend: Upper Func Diazone W")
+
+# Guiding diazone upper
+boxplot(B.Dia.W ~ Tooth, data = h.up.dat,
+        main = "Metameric trend: Upper Guid Diazone W")
+
+# Functional diazone lower
+boxplot(B.Dia.W ~ Tooth, data = h.low.dat,
+        main = "Metameric trend: Lower Func Diazone W")
+
+# Guiding diazone lower
+boxplot(L.Dia.W ~ Tooth, data = h.low.dat,
+        main = "Metameric trend: Lower Guid Diazone W")
+
+boxplot(L.Dia.W ~ Tooth, data = h.up.dat,
+        main = "Metameric trend: Upper Func Diazone W")
+
+# Guiding diazone upper
+boxplot(B.Dia.W ~ Tooth, data = h.up.dat,
+        main = "Metameric trend: Upper Guid Diazone W")
+
+# Functional diazone lower
+boxplot(B.Dia.W ~ Tooth, data = h.low.dat,
+        main = "Metameric trend: Lower Func Diazone W")
+
+# Guiding diazone lower
+boxplot(L.Dia.W ~ Tooth, data = h.low.dat,
+        main = "Metameric trend: Lower Guid Diazone W")
+
+
+# generate correlation matrices for visualization
+h.up.wo.bw.dat <- h.up.wo.bwinfo[, 1:10]
+
+h.low.wo.bw.dat <- h.low.wo.bwinfo[, 1:10]
+
+h.up.wo.K <- h.up.wo.bwinfo[, 5:12]
+
+h.low.wo.K <- h.low.wo.bwinfo[, 5:12]
+
+# isolate KI
+
+# filter out KI, because they are secondary data
+
+M.upp.KI = cor(h.up.wo.K)
+M.low.KI = cor(h.low.wo.K)
+
+M.upp.dat = cor(h.up.wo.bw.dat)
+M.low.dat = cor(h.low.wo.bw.dat)
+
+
+# check covariance between K and band widths
+corrplot(M.upp.dat, method = 'ellipse', order = 'alphabet', type = 'upper' , 
+         addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' ,
+         main = "Upper Molars", mar=c(0,0,4,0), tl.offset = 1)
+# some covariance in upper molars
+# Dia.K negatively correlates with enamel thickness in the buccal side, but not in the lingual size
+
+
+corrplot(M.low.dat, method = 'ellipse', order = 'alphabet', type = 'upper' , 
+         addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' ,
+         main = "Lower Molars", mar=c(0,0,4,0), tl.offset = 1)
+# Buccal and lingual thickness has the strongest covariation
+# Lingual diazone K also positively covaries with parazon K
+
+# no clear covariation patter between K and 
+
+# these correlations are mostly explained by morphological correlations, e.g., B & L thickness
+
+# check covariance between K and macro HSB properties
+corrplot(M.upp.KI, method = 'ellipse', order = 'alphabet', type = 'upper' , 
+         addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' ,
+         main = "Upper Molars", mar=c(0,0,4,0), tl.offset = 1)
+# come covariance in upper molars
+# 1. B.Dia.K  (guid) negatively correlates with both buccal thickness -> 
+# this can be interpreted as a fynctional trade off
+# 2. B HSB packing density positively correlates with B thickness -> morphological correlates
+# lingual side has much weaker correlation
+
+corrplot(M.low.KI, method = 'ellipse', order = 'alphabet', type = 'upper' , 
+         addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' ,
+         main = "Lower Molars", mar=c(0,0,4,0), tl.offset = 1)
+# 1. L.Dia.K  +correlates with L.Para.K (guid), and L packing density -> morphological correlates
+# 2. L HSB packing density positively correlates with L and B thickness -> morphological correlates
+# 3. L relative thickness of decussated E negatively correlates with L.Dia and Para.K ->
+# this can be interpreted as a fynctional trade off
+
+# upper and lower has different correlation patterns
+
+# correlations are stronger in the guiding side than in the functional side
+
+# morphological correlation? or functional trade off?
+
+# No clear patter to support one or the other
+# stronger Correlation in guiding side may be linked to its higher susceptibility to chipping 
+
+M.UM1 = cor(papio.UM1.dat)
+corrplot(M.UM1, method = 'ellipse', order = 'AOE', type = 'upper' , 
+         addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' )
+
+corrplot.mixed(M.UM1,  order = 'AOE')
