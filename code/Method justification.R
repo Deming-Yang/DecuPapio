@@ -72,18 +72,22 @@ points(human.LM3$L.PD.mi, human.LM3$L.HSBD,
 legend("bottomright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
 
 # Paired comparisons
-human.all.data$B.PD.mi
+h.B.PD <- cbind(human.all.data$B.PD.mi, human.all.data$B.HSBD)
+colnames(h.B.PD) <- c("B.PD.mi","B.HSBD")
+h.B.PD <- na.omit(h.B.PD)
 
-human.all.data$L.PD.mi
+h.L.PD <- cbind(human.all.data$L.PD.mi, human.all.data$L.HSBD)
+colnames(h.L.PD) <- c("B.PD.mi","B.HSBD")
+h.L.PD <- na.omit(h.L.PD)
 
 # log-transformed results for visualization
 par(mfrow=c(1,2)) #800X760
-plot(log(human.all.data$B.PD.mi), log(human.all.data$B.HSBD),
+plot(log(h.B.PD$B.PD.mi), log(h.B.PD$B.HSBD),
      xlim=c(1.6,2.8),ylim=c(1.6,2.8),pch=18,col=fill.10[4],cex=1.6,
      main = "Buccal", xlab = "HSB Packing density", ylab = "Estimate from band width")
 abline(a=0,b=1)
 
-plot(log(human.all.data$L.PD.mi), log(human.all.data$L.HSBD),
+plot(log(h.L.PD$L.PD.mi), log(h.L.PD$L.HSBD),
      xlim=c(1.6,2.8),ylim=c(1.6,2.8),pch=18,col=fill.10[4],cex=1.6,
      main = "Lingual", xlab = "HSB Packing density", ylab = "Estimate from band width")
 abline(a=0,b=1)
