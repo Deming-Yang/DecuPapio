@@ -299,130 +299,92 @@ points(papio.LM3$L.Para.K, papio.LM3$B.Para.K,
 # K values
 # Functional diazone upper
 par(mfrow=c(2,2)) #800X600
-boxplot(L.Dia.K ~ Tooth, data = h.up.dat,
+boxplot(L.Dia.K ~ Tooth, data = papio.up.dat,
         main = "Metameric trend: Upper Func Diazone K")
-stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = h.up.dat,
+stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = papio.up.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Guiding diazone upper
-boxplot(B.Dia.K ~ Tooth, data = h.up.dat,
+boxplot(B.Dia.K ~ Tooth, data = papio.up.dat,
         main = "Metameric trend: Upper Guid Diazone K")
-stripchart(B.Dia.K ~ Tooth, vertical = TRUE, data = h.up.dat,
+stripchart(B.Dia.K ~ Tooth, vertical = TRUE, data = papio.up.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Functional diazone lower
-boxplot(B.Dia.K ~ Tooth, data = h.low.dat,
+boxplot(B.Dia.K ~ Tooth, data = papio.low.dat,
         main = "Metameric trend: Lower Func Diazone K")
-stripchart(B.Dia.K ~ Tooth, vertical = TRUE, data = h.low.dat,
+stripchart(B.Dia.K ~ Tooth, vertical = TRUE, data = papio.low.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Guiding diazone lower
-boxplot(L.Dia.K ~ Tooth, data = h.low.dat,
+boxplot(L.Dia.K ~ Tooth, data = papio.low.dat,
         main = "Metameric trend: Lower Guid Diazone K")
-stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = h.low.dat,
+stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = papio.low.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # plots in supplementary
 # Diazone and parazone width
 
-boxplot(L.Dia.W ~ Tooth, data = h.up.dat,
+boxplot(L.Dia.W ~ Tooth, data = papio.up.dat,
         main = "Metameric trend: Upper Func Diazone W")
 
 # Guiding diazone upper
-boxplot(B.Dia.W ~ Tooth, data = h.up.dat,
+boxplot(B.Dia.W ~ Tooth, data = papio.up.dat,
         main = "Metameric trend: Upper Guid Diazone W")
 
 # Functional diazone lower
-boxplot(B.Dia.W ~ Tooth, data = h.low.dat,
+boxplot(B.Dia.W ~ Tooth, data = papio.low.dat,
         main = "Metameric trend: Lower Func Diazone W")
 
 # Guiding diazone lower
-boxplot(L.Dia.W ~ Tooth, data = h.low.dat,
+boxplot(L.Dia.W ~ Tooth, data = papio.low.dat,
         main = "Metameric trend: Lower Guid Diazone W")
 
-boxplot(L.Dia.W ~ Tooth, data = h.up.dat,
+boxplot(L.Dia.W ~ Tooth, data = papio.up.dat,
         main = "Metameric trend: Upper Func Diazone W")
 
 # Guiding diazone upper
-boxplot(B.Dia.W ~ Tooth, data = h.up.dat,
+boxplot(B.Dia.W ~ Tooth, data = papio.up.dat,
         main = "Metameric trend: Upper Guid Diazone W")
 
 # Functional diazone lower
-boxplot(B.Dia.W ~ Tooth, data = h.low.dat,
+boxplot(B.Dia.W ~ Tooth, data = papio.low.dat,
         main = "Metameric trend: Lower Func Diazone W")
 
 # Guiding diazone lower
-boxplot(L.Dia.W ~ Tooth, data = h.low.dat,
+boxplot(L.Dia.W ~ Tooth, data = papio.low.dat,
         main = "Metameric trend: Lower Guid Diazone W")
 
 
 # generate correlation matrices for visualization
-h.up.wo.bw.dat <- h.up.wo.bwinfo[, 1:10]
+papio.up.wo.bw.dat <- papio.up.dat[,c(4,6,8,10,12:15)]
 
-h.low.wo.bw.dat <- h.low.wo.bwinfo[, 1:10]
-
-h.up.wo.K <- h.up.wo.bwinfo[, 5:12]
-
-h.low.wo.K <- h.low.wo.bwinfo[, 5:12]
+papio.low.wo.bw.dat <- papio.low.dat[,c(4,6,8,10,12:15)]
 
 # isolate KI
 
 # filter out KI, because they are secondary data
 
-M.upp.KI = cor(h.up.wo.K)
-M.low.KI = cor(h.low.wo.K)
+# M.upp.KI = cor(papio.up.wo.K)
+# M.low.KI = cor(papio.low.wo.K)
 
-M.upp.dat = cor(h.up.wo.bw.dat)
-M.low.dat = cor(h.low.wo.bw.dat)
+M.upp.dat = cor(na.omit(papio.up.wo.bw.dat))
+M.low.dat = cor(na.omit(papio.low.wo.bw.dat))
 
-
+par(mfrow=c(1,1))
 # check covariance between K and band widths
 corrplot(M.upp.dat, method = 'ellipse', order = 'alphabet', type = 'upper' , 
          addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' ,
          main = "Upper Molars", mar=c(0,0,4,0), tl.offset = 1)
-# some covariance in upper molars
-# Dia.K negatively correlates with enamel thickness in the buccal side, but not in the lingual size
+# no strong correlation in upper
 
 
 corrplot(M.low.dat, method = 'ellipse', order = 'alphabet', type = 'upper' , 
          addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' ,
          main = "Lower Molars", mar=c(0,0,4,0), tl.offset = 1)
-# Buccal and lingual thickness has the strongest covariation
-# Lingual diazone K also positively covaries with parazon K
+# a few strong correlations in lower, especially with widths
+# no clear covariation patter between K and widths
 
-# no clear covariation patter between K and 
 
-# these correlations are mostly explained by morphological correlations, e.g., B & L thickness
 
-# check covariance between K and macro HSB properties
-corrplot(M.upp.KI, method = 'ellipse', order = 'alphabet', type = 'upper' , 
-         addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' ,
-         main = "Upper Molars", mar=c(0,0,4,0), tl.offset = 1)
-# come covariance in upper molars
-# 1. B.Dia.K  (guid) negatively correlates with both buccal thickness -> 
-# this can be interpreted as a fynctional trade off
-# 2. B HSB packing density positively correlates with B thickness -> morphological correlates
-# lingual side has much weaker correlation
 
-corrplot(M.low.KI, method = 'ellipse', order = 'alphabet', type = 'upper' , 
-         addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' ,
-         main = "Lower Molars", mar=c(0,0,4,0), tl.offset = 1)
-# 1. L.Dia.K  +correlates with L.Para.K (guid), and L packing density -> morphological correlates
-# 2. L HSB packing density positively correlates with L and B thickness -> morphological correlates
-# 3. L relative thickness of decussated E negatively correlates with L.Dia and Para.K ->
-# this can be interpreted as a fynctional trade off
-
-# upper and lower has different correlation patterns
-
-# correlations are stronger in the guiding side than in the functional side
-
-# morphological correlation? or functional trade off?
-
-# No clear patter to support one or the other
-# stronger Correlation in guiding side may be linked to its higher susceptibility to chipping 
-
-M.UM1 = cor(papio.UM1.dat)
-corrplot(M.UM1, method = 'ellipse', order = 'AOE', type = 'upper' , 
-         addCoef.col = 'black', tl.pos = 'd', cl.pos = 'n' )
-
-corrplot.mixed(M.UM1,  order = 'AOE')
