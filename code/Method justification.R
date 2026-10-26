@@ -163,7 +163,7 @@ ggplot(U.B.PD, aes(x = B.HSBD, y = B.PD.mi)) +
        y = "B.PD.mi", x = "B.HSBD")
 
 # linear regression 2: using band width to estimate packing density
-# upper buccal
+# upper lingual
 UL.HSBD.loglm <- lm(log(L.PD.mi) ~ log(L.HSBD) + 0, data = U.L.PD)
 summary(UL.HSBD.loglm)
 
