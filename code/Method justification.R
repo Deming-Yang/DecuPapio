@@ -35,49 +35,6 @@ human.LM3 <- human.all.data %>%
 human.U <- rbind(human.UM1, human.UM2, human.UM3)
 human.L <- rbind(human.LM1, human.LM2, human.LM3)
 
-par(mfrow=c(2,2)) #800X760
-# Upper Buccal
-plot(human.UM1$B.PD.mi, human.UM1$B.HSBD,
-     xlim=c(4,14),ylim=c(4,14),pch=18,col=fill.10[2],cex=1.5,
-     main = "Upper Buccal", xlab = "HSB Packing density", ylab = "Estimate from band width")
-abline(a=0,b=1)
-points(human.UM2$B.PD.mi, human.UM2$B.HSBD,
-       pch=18,col=fill.10[5],cex=1.6)
-points(human.UM3$B.PD.mi, human.UM3$B.HSBD,
-       pch=18,col=fill.10[8],cex=1.6)
-
-# Upper lingual
-plot(human.UM1$L.PD.mi, human.UM1$L.HSBD,
-     xlim=c(4,14),ylim=c(4,14),pch=18,col=fill.10[2],cex=1.5,
-     main = "Upper Lingual", xlab = "HSB Packing density", ylab = "Estimate from band width")
-abline(a=0,b=1)
-points(human.UM2$L.PD.mi, human.UM2$L.HSBD,
-       pch=18,col=fill.10[5],cex=1.6)
-points(human.UM3$L.PD.mi, human.UM3$L.HSBD,
-       pch=18,col=fill.10[8],cex=1.6)
-
-# lowerer Buccal
-plot(human.LM1$B.PD.mi, human.LM1$B.HSBD,
-     xlim=c(4,14),ylim=c(4,14),pch=18,col=fill.10[2],cex=1.5,
-     main = "Lower Buccal", xlab = "HSB Packing density", ylab = "Estimate from band width")
-abline(a=0,b=1)
-points(human.LM2$B.PD.mi, human.LM2$B.HSBD,
-       pch=18,col=fill.10[5],cex=1.6)
-points(human.LM3$B.PD.mi, human.LM3$B.HSBD,
-       pch=18,col=fill.10[8],cex=1.6)
-
-# lower lingual
-plot(human.LM1$L.PD.mi, human.LM1$L.HSBD,
-     xlim=c(4,14),ylim=c(4,14),pch=18,col=fill.10[2],cex=1.5,
-     main = "Lower Lingual", xlab = "HSB Packing density", ylab = "Estimate from band width")
-abline(a=0,b=1)
-points(human.LM2$L.PD.mi, human.LM2$L.HSBD,
-       pch=18,col=fill.10[5],cex=1.6)
-points(human.LM3$L.PD.mi, human.LM3$L.HSBD,
-       pch=18,col=fill.10[8],cex=1.6)
-legend("bottomright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
-
-
 
 # Paired comparisons
 # Upper Buccal
@@ -149,19 +106,6 @@ UB.grid.fit <- data.frame(B.HSBD = exp(UB.grid), exp(fitted), exp(lower), exp(up
 
 UB.grid.fit<- cbind(UB.grid.fit, exp(predict(UB.HSBD.loglm, newdata = exp(UB.grid), interval = "prediction", level = 0.95)))
 
-ggplot(U.B.PD, aes(x = B.HSBD, y = B.PD.mi)) +
-  geom_point(alpha = 0.5) +  # Raw data points
-  
-  geom_ribbon(data = UB.grid.fit, aes(y = fit, 
-                                     ymin = lwr, ymax = upr), alpha = 0.2, fill = "blue") + # 95% CI
-  geom_ribbon(data = UB.grid.fit, aes(y = exp.fitted., 
-                                     ymin = exp.lower., ymax = exp.upper.), alpha = 0.2, fill = "blue") + # 95% CI
-  geom_line(data = UB.grid.fit, aes(y = exp.fitted.), color = "blue", linewidth = 1) + # GLM curve
-  geom_abline (slope=1, linetype = "dashed", color="Red") +
-  theme_minimal() +
-  labs(title = "Upper Buccal",
-       y = "B.PD.mi", x = "B.HSBD")
-
 # linear regression 2: using band width to estimate packing density
 # upper lingual
 UL.HSBD.loglm <- lm(log(L.PD.mi) ~ log(L.HSBD) + 0, data = U.L.PD)
@@ -181,19 +125,6 @@ upper  <- exp(preds$fit + (1.96 * preds$se.fit))
 UL.grid.fit <- data.frame(L.HSBD = exp(UL.grid), exp(fitted), exp(lower), exp(upper))
 
 UL.grid.fit<- cbind(UL.grid.fit, exp(predict(UL.HSBD.loglm, newdata = exp(UL.grid), interval = "prediction", level = 0.95)))
-
-ggplot(U.L.PD, aes(x = L.HSBD, y = L.PD.mi)) +
-  geom_point(alpha = 0.5) +  # Raw data points
-  
-  geom_ribbon(data = UL.grid.fit, aes(y = fit, 
-                                      ymin = lwr, ymax = upr), alpha = 0.2, fill = "blue") + # 95% CI
-  geom_ribbon(data = UL.grid.fit, aes(y = exp.fitted., 
-                                      ymin = exp.lower., ymax = exp.upper.), alpha = 0.2, fill = "blue") + # 95% CI
-  geom_line(data = UL.grid.fit, aes(y = exp.fitted.), color = "blue", linewidth = 1) + # GLM curve
-  geom_abline (slope=1, linetype = "dashed", color="Red") +
-  theme_minimal() +
-  labs(title = "Upper Lingual",
-       y = "L.PD.mi", x = "L.HSBD")
 
 # linear regression 3: using band width to estimate packing density
 # upper buccal
@@ -215,19 +146,6 @@ LB.grid.fit <- data.frame(B.HSBD = exp(LB.grid), exp(fitted), exp(lower), exp(up
 
 LB.grid.fit<- cbind(LB.grid.fit, exp(predict(LB.HSBD.loglm, newdata = exp(LB.grid), interval = "prediction", level = 0.95)))
 
-ggplot(L.B.PD, aes(x = B.HSBD, y = B.PD.mi)) +
-  geom_point(alpha = 0.5) +  # Raw data points
-  
-  geom_ribbon(data = LB.grid.fit, aes(y = fit, 
-                                      ymin = lwr, ymax = upr), alpha = 0.2, fill = "blue") + # 95% CI
-  geom_ribbon(data = LB.grid.fit, aes(y = exp.fitted., 
-                                      ymin = exp.lower., ymax = exp.upper.), alpha = 0.2, fill = "blue") + # 95% CI
-  geom_line(data = LB.grid.fit, aes(y = exp.fitted.), color = "blue", linewidth = 1) + # GLM curve
-  geom_abline (slope=1, linetype = "dashed", color="Red") +
-  theme_minimal() +
-  labs(title = "Lower Buccal",
-       y = "B.PD.mi", x = "B.HSBD")
-
 # linear regression 4: using band width to estimate packing density
 # upper buccal
 LL.HSBD.loglm <- lm(log(L.PD.mi) ~ log(L.HSBD) + 0, data = L.L.PD)
@@ -247,20 +165,6 @@ upper  <- exp(preds$fit + (1.96 * preds$se.fit))
 LL.grid.fit <- data.frame(L.HSBD = exp(LL.grid), exp(fitted), exp(lower), exp(upper))
 
 LL.grid.fit<- cbind(LL.grid.fit, exp(predict(LL.HSBD.loglm, newdata = exp(LL.grid), interval = "prediction", level = 0.95)))
-
-ggplot(L.L.PD, aes(x = L.HSBD, y = L.PD.mi)) +
-  geom_point(alpha = 0.5) +  # Raw data points
-  
-  geom_ribbon(data = LL.grid.fit, aes(y = fit, 
-                                      ymin = lwr, ymax = upr), alpha = 0.2, fill = "blue") + # 95% CI
-  geom_ribbon(data = LL.grid.fit, aes(y = exp.fitted., 
-                                      ymin = exp.lower., ymax = exp.upper.), alpha = 0.2, fill = "blue") + # 95% CI
-  geom_line(data = LL.grid.fit, aes(y = exp.fitted.), color = "blue", linewidth = 1) + # GLM curve
-  geom_abline (slope=1, linetype = "dashed", color="Red") +
-  theme_minimal() +
-  labs(title = "Lower Lingual",
-       y = "L.PD.mi", x = "L.HSBD")
-
 
 # linear regression 5: 
 # all buccal 

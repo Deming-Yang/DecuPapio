@@ -69,12 +69,8 @@ points (x = rep(2, nrow(papio.low.dat)), y = papio.low.dat$L.KI, col = "red", pc
 legend("topright", legend=c("Functional","Guiding"), pch=16, col=c("blue", "red"))
 
 
-# no pooling of tooth positions is justified
-
-
-
-
-##Fig 10 upper vs lower 
+######
+##Fig 7 upper vs lower 
 par(mfrow=c(1,2)) #800X600
 # functional side
 KI <- c(papio.up.dat$L.KI, papio.low.dat$B.KI)
@@ -100,33 +96,32 @@ stripchart(KI ~ Side, vertical = TRUE, data = UvL.G.KI,
 legend("topleft", legend=c("Lower","Upper"), pch=16, col=c("blue", "red"))
 
 
-####################### band width ###
-# comparison between functional and guiding sides
-# par(mfrow=c(2,2)) #800X760
-# # upper K index
-# plot(papio.UM1$B.W, papio.UM1$L.W,
-#      xlim=c(50,250),ylim=c(50,250),pch=18,col=fill.10[2],cex=1.6,
-#      main = "Upper", xlab = "Guiding avg BW", ylab = "Functional avg BW")
-# abline(a=0,b=1)
-# points(papio.UM2$B.W, papio.UM2$L.W,
-#        pch=18,col=fill.10[5],cex=1.6)
-# points(papio.UM3$B.W, papio.UM3$L.W,
-#        pch=18,col=fill.10[8],cex=1.6)
-# 
-# # Lower K index
-# plot(papio.LM1$L.W, papio.LM1$B.W,
-#      xlim=c(50,250),ylim=c(50,250),pch=18,col=fill.10[2],cex=1.6,
-#      main = "Lower", xlab = "Guiding avg BW", ylab = "Functional avg BW")
-# abline(a=0,b=1)
-# points(papio.LM2$L.W, papio.LM2$B.W,
-#        pch=18,col=fill.10[5],cex=1.6)
-# points(papio.LM3$L.W, papio.LM3$B.W,
-#        pch=18,col=fill.10[8],cex=1.6)
-# legend("topleft", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
+##### Figure 8 lnKI metameric trend
+par(mfrow=c(2,2)) #800X760
 
+boxplot(B.KI ~ Tooth, data = papio.up.dat,
+        ylim=c(0,3), col=NULL, main = "Upper Buccal", ylab = "lnKI")
+stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
 
+boxplot(L.KI ~ Tooth, data = papio.up.dat,
+        ylim=c(0,3), col=NULL, main = "Upper Lingual", ylab = "lnKI")
+stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
 
-# figure 9
+boxplot(B.KI ~ Tooth, data = papio.low.dat,
+        ylim=c(0,3), col=NULL, main = "Lower Buccal", ylab = "lnKI")
+stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(L.KI ~ Tooth, data = papio.low.dat,
+        ylim=c(0,3), col=NULL, main = "Lower Lingual", ylab = "lnKI")
+stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+legend("topright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.3)
+
+######
+# Figure 9
 ###### upper M1 vs lower M1 ################
 par(mfrow=c(2,3)) #800X600
 # functional side
@@ -201,7 +196,7 @@ boxplot(G.W ~ Side, data = UvL.GW,
 stripchart(G.W ~ Side, vertical = TRUE, data = UvL.GW,
            method = "jitter", add = TRUE, cex = 1.3, pch = 16, col = c("blue","red"))
 
-# change this to HSB density?
+######
 # Figure 10 band width comparisons for metameric trends Box plots
 par(mfrow=c(2,2)) #800X760
 
@@ -226,8 +221,8 @@ boxplot(L.W ~ Tooth, data = papio.low.dat,
 stripchart(L.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
            method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
 
-
-# Use HSB packing density
+######
+# Figure 11 Use HSB packing density
 
 par(mfrow=c(2,2)) #800X760
 
@@ -253,29 +248,29 @@ stripchart(L.HSBD ~ Tooth, vertical = TRUE, data = papio.low.dat,
            method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
 
 ################## other figures #########################
-
-par(mfrow=c(2,2)) #800X760
-
-boxplot(B.KI ~ Tooth, data = papio.up.dat,
-        ylim=c(0,3), col=NULL, main = "Upper Buccal", ylab = "lnKI")
-stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-
-boxplot(L.KI ~ Tooth, data = papio.up.dat,
-        ylim=c(0,3), col=NULL, main = "Upper Lingual", ylab = "lnKI")
-stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-
-boxplot(B.KI ~ Tooth, data = papio.low.dat,
-        ylim=c(0,3), col=NULL, main = "Lower Buccal", ylab = "lnKI")
-stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-
-boxplot(L.KI ~ Tooth, data = papio.low.dat,
-        ylim=c(0,3), col=NULL, main = "Lower Lingual", ylab = "lnKI")
-stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-legend("topright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.3)
+####################### band width ###
+# comparison between functional and guiding sides
+# par(mfrow=c(2,2)) #800X760
+# # upper K index
+# plot(papio.UM1$B.W, papio.UM1$L.W,
+#      xlim=c(50,250),ylim=c(50,250),pch=18,col=fill.10[2],cex=1.6,
+#      main = "Upper", xlab = "Guiding avg BW", ylab = "Functional avg BW")
+# abline(a=0,b=1)
+# points(papio.UM2$B.W, papio.UM2$L.W,
+#        pch=18,col=fill.10[5],cex=1.6)
+# points(papio.UM3$B.W, papio.UM3$L.W,
+#        pch=18,col=fill.10[8],cex=1.6)
+# 
+# # Lower K index
+# plot(papio.LM1$L.W, papio.LM1$B.W,
+#      xlim=c(50,250),ylim=c(50,250),pch=18,col=fill.10[2],cex=1.6,
+#      main = "Lower", xlab = "Guiding avg BW", ylab = "Functional avg BW")
+# abline(a=0,b=1)
+# points(papio.LM2$L.W, papio.LM2$B.W,
+#        pch=18,col=fill.10[5],cex=1.6)
+# points(papio.LM3$L.W, papio.LM3$B.W,
+#        pch=18,col=fill.10[8],cex=1.6)
+# legend("topleft", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
 
 # comparison between functional and guiding sides
 par(mfrow=c(2,2)) #800X600
@@ -348,7 +343,7 @@ boxplot(L.Dia.K ~ Tooth, data = papio.low.dat,ylim=c(30,120),
 stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = papio.low.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
-# plots in supplementary
+######### plots in SOM #######
 # Diazone and parazone width Fig S1
 par(mfrow=c(4,2)) #860X500
 boxplot(L.Dia.W ~ Tooth, data = papio.up.dat,ylim=c(20,140), ylab = "Diazone W",
@@ -398,6 +393,102 @@ boxplot(L.Para.W ~ Tooth, data = papio.low.dat,ylim=c(20,140), ylab = "Parazone 
 stripchart(L.Para.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
+##### SOM Fig S2 #####
+par(mfrow=c(2,2)) #800X760
+# Upper Buccal
+plot(human.UM1$B.PD.mi, human.UM1$B.HSBD,
+     xlim=c(4,14),ylim=c(4,14),pch=18,col=fill.10[2],cex=1.5,
+     main = "Upper Buccal", xlab = "HSB Packing density", ylab = "Estimate from band width")
+abline(a=0,b=1)
+points(human.UM2$B.PD.mi, human.UM2$B.HSBD,
+       pch=18,col=fill.10[5],cex=1.6)
+points(human.UM3$B.PD.mi, human.UM3$B.HSBD,
+       pch=18,col=fill.10[8],cex=1.6)
+
+# Upper lingual
+plot(human.UM1$L.PD.mi, human.UM1$L.HSBD,
+     xlim=c(4,14),ylim=c(4,14),pch=18,col=fill.10[2],cex=1.5,
+     main = "Upper Lingual", xlab = "HSB Packing density", ylab = "Estimate from band width")
+abline(a=0,b=1)
+points(human.UM2$L.PD.mi, human.UM2$L.HSBD,
+       pch=18,col=fill.10[5],cex=1.6)
+points(human.UM3$L.PD.mi, human.UM3$L.HSBD,
+       pch=18,col=fill.10[8],cex=1.6)
+
+# lowerer Buccal
+plot(human.LM1$B.PD.mi, human.LM1$B.HSBD,
+     xlim=c(4,14),ylim=c(4,14),pch=18,col=fill.10[2],cex=1.5,
+     main = "Lower Buccal", xlab = "HSB Packing density", ylab = "Estimate from band width")
+abline(a=0,b=1)
+points(human.LM2$B.PD.mi, human.LM2$B.HSBD,
+       pch=18,col=fill.10[5],cex=1.6)
+points(human.LM3$B.PD.mi, human.LM3$B.HSBD,
+       pch=18,col=fill.10[8],cex=1.6)
+
+# lower lingual
+plot(human.LM1$L.PD.mi, human.LM1$L.HSBD,
+     xlim=c(4,14),ylim=c(4,14),pch=18,col=fill.10[2],cex=1.5,
+     main = "Lower Lingual", xlab = "HSB Packing density", ylab = "Estimate from band width")
+abline(a=0,b=1)
+points(human.LM2$L.PD.mi, human.LM2$L.HSBD,
+       pch=18,col=fill.10[5],cex=1.6)
+points(human.LM3$L.PD.mi, human.LM3$L.HSBD,
+       pch=18,col=fill.10[8],cex=1.6)
+legend("bottomright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
+
+##### SOM figure S3 #####
+ggplot(U.B.PD, aes(x = B.HSBD, y = B.PD.mi)) +
+        geom_point(alpha = 0.5) +  # Raw data points
+        
+        geom_ribbon(data = UB.grid.fit, aes(y = fit, 
+                                            ymin = lwr, ymax = upr), alpha = 0.2, fill = "blue") + # 95% CI
+        geom_ribbon(data = UB.grid.fit, aes(y = exp.fitted., 
+                                            ymin = exp.lower., ymax = exp.upper.), alpha = 0.2, fill = "blue") + # 95% CI
+        geom_line(data = UB.grid.fit, aes(y = exp.fitted.), color = "blue", linewidth = 1) + # GLM curve
+        geom_abline (slope=1, linetype = "dashed", color="Red") +
+        theme_minimal() +
+        labs(title = "Upper Buccal",
+             y = "B.PD.mi", x = "B.HSBD")
+
+ggplot(U.L.PD, aes(x = L.HSBD, y = L.PD.mi)) +
+        geom_point(alpha = 0.5) +  # Raw data points
+        
+        geom_ribbon(data = UL.grid.fit, aes(y = fit, 
+                                            ymin = lwr, ymax = upr), alpha = 0.2, fill = "blue") + # 95% CI
+        geom_ribbon(data = UL.grid.fit, aes(y = exp.fitted., 
+                                            ymin = exp.lower., ymax = exp.upper.), alpha = 0.2, fill = "blue") + # 95% CI
+        geom_line(data = UL.grid.fit, aes(y = exp.fitted.), color = "blue", linewidth = 1) + # GLM curve
+        geom_abline (slope=1, linetype = "dashed", color="Red") +
+        theme_minimal() +
+        labs(title = "Upper Lingual",
+             y = "L.PD.mi", x = "L.HSBD")
+
+ggplot(L.B.PD, aes(x = B.HSBD, y = B.PD.mi)) +
+        geom_point(alpha = 0.5) +  # Raw data points
+        
+        geom_ribbon(data = LB.grid.fit, aes(y = fit, 
+                                            ymin = lwr, ymax = upr), alpha = 0.2, fill = "blue") + # 95% CI
+        geom_ribbon(data = LB.grid.fit, aes(y = exp.fitted., 
+                                            ymin = exp.lower., ymax = exp.upper.), alpha = 0.2, fill = "blue") + # 95% CI
+        geom_line(data = LB.grid.fit, aes(y = exp.fitted.), color = "blue", linewidth = 1) + # GLM curve
+        geom_abline (slope=1, linetype = "dashed", color="Red") +
+        theme_minimal() +
+        labs(title = "Lower Buccal",
+             y = "B.PD.mi", x = "B.HSBD")
+
+
+ggplot(L.L.PD, aes(x = L.HSBD, y = L.PD.mi)) +
+        geom_point(alpha = 0.5) +  # Raw data points
+        
+        geom_ribbon(data = LL.grid.fit, aes(y = fit, 
+                                            ymin = lwr, ymax = upr), alpha = 0.2, fill = "blue") + # 95% CI
+        geom_ribbon(data = LL.grid.fit, aes(y = exp.fitted., 
+                                            ymin = exp.lower., ymax = exp.upper.), alpha = 0.2, fill = "blue") + # 95% CI
+        geom_line(data = LL.grid.fit, aes(y = exp.fitted.), color = "blue", linewidth = 1) + # GLM curve
+        geom_abline (slope=1, linetype = "dashed", color="Red") +
+        theme_minimal() +
+        labs(title = "Lower Lingual",
+             y = "L.PD.mi", x = "L.HSBD")
 
 # generate correlation matrices for visualization
 papio.up.wo.bw.dat <- papio.up.dat[,c(4,6,8,10,12:15)]
