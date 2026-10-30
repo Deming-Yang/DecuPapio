@@ -8,6 +8,10 @@ se <- function(x) {
 # import papio band width data
 papio.all.data <-read.csv("./data/Papio all data.csv")
 
+# calculate lnKI
+papio.all.data <- papio.all.data %>% mutate(B.KI = log(B.Dia.K/B.Para.K))
+papio.all.data <- papio.all.data %>% mutate(L.KI = log(L.Dia.K/L.Para.K))
+
 # calculate average band width using Diazone w + parazone w
 papio.all.data <- papio.all.data %>% mutate(B.W = B.Dia.W + B.Para.W)
 papio.all.data <- papio.all.data %>% mutate(L.W = L.Dia.W + L.Para.W)

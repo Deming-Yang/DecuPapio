@@ -8,57 +8,9 @@ library(ggplot2)
 fill.10<-viridis_pal()(10)
 
 ## Plots in the main text ##
-# Figure 8 lnKI comparisons for metameric trends Box plots
-par(mfrow=c(2,2)) #800X760
-
-boxplot(B.KI ~ Tooth, data = papio.up.dat,
-        ylim=c(0,3), col=NULL, main = "Upper Buccal", ylab = "lnKI")
-stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-
-boxplot(L.KI ~ Tooth, data = papio.up.dat,
-        ylim=c(0,3), col=NULL, main = "Upper Lingual", ylab = "lnKI")
-stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-
-boxplot(B.KI ~ Tooth, data = papio.low.dat,
-        ylim=c(0,3), col=NULL, main = "Lower Buccal", ylab = "lnKI")
-stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-
-boxplot(L.KI ~ Tooth, data = papio.low.dat,
-        ylim=c(0,3), col=NULL, main = "Lower Lingual", ylab = "lnKI")
-stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-legend("topright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.3)
-
-# Figure 8 band width comparisons for metameric trends Box plots
-par(mfrow=c(2,2)) #800X760
-
-boxplot(B.W ~ Tooth, data = papio.up.dat,
-        ylim=c(50,250), col=NULL, main = "Upper Buccal", ylab = "Average Band Width")
-stripchart(B.W ~ Tooth, vertical = TRUE, data = papio.up.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-legend("topright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.3)
-
-boxplot(L.W ~ Tooth, data = papio.up.dat,
-        ylim=c(50,250), col=NULL, main = "Upper Lingual", ylab = "Average Band Width")
-stripchart(L.W ~ Tooth, vertical = TRUE, data = papio.up.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-
-boxplot(B.W ~ Tooth, data = papio.low.dat,
-        ylim=c(50,250), col=NULL, main = "Lower Buccal", ylab = "Average Band Width")
-stripchart(B.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
-
-boxplot(L.W ~ Tooth, data = papio.low.dat,
-        ylim=c(50,250), col=NULL, main = "Lower Lingual", ylab = "Average Band Width")
-stripchart(L.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
-           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
 
 
-
-## Figure 9A
+## Figure 6A
 # comparison between functional and guiding sides
 par(mfrow=c(2,2)) #800X760
 # upper K index
@@ -83,7 +35,7 @@ points(papio.LM3$L.KI, papio.LM3$B.KI,
 legend("bottomright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
 
 
-## Figure 9B
+## Figure 6B
 # upper
 KI <- c(papio.up.dat$B.KI, papio.up.dat$L.KI)
 Cusp <- c(rep("Guiding", 31), rep("Functional", 31))
@@ -115,31 +67,6 @@ for(i in 1: nrow(papio.low.dat)){
 points (x = rep(1, nrow(papio.low.dat)), y = papio.low.dat$B.KI, col = "blue", pch = 16)
 points (x = rep(2, nrow(papio.low.dat)), y = papio.low.dat$L.KI, col = "red", pch = 16)
 legend("topright", legend=c("Functional","Guiding"), pch=16, col=c("blue", "red"))
-
-####################### band width ###
-## Figure 9A
-# comparison between functional and guiding sides
-par(mfrow=c(2,2)) #800X760
-# upper K index
-plot(papio.UM1$B.W, papio.UM1$L.W,
-     xlim=c(50,250),ylim=c(50,250),pch=18,col=fill.10[2],cex=1.6,
-     main = "Upper", xlab = "Guiding avg BW", ylab = "Functional avg BW")
-abline(a=0,b=1)
-points(papio.UM2$B.W, papio.UM2$L.W,
-       pch=18,col=fill.10[5],cex=1.6)
-points(papio.UM3$B.W, papio.UM3$L.W,
-       pch=18,col=fill.10[8],cex=1.6)
-
-# Lower K index
-plot(papio.LM1$L.W, papio.LM1$B.W,
-     xlim=c(50,250),ylim=c(50,250),pch=18,col=fill.10[2],cex=1.6,
-     main = "Lower", xlab = "Guiding avg BW", ylab = "Functional avg BW")
-abline(a=0,b=1)
-points(papio.LM2$L.W, papio.LM2$B.W,
-       pch=18,col=fill.10[5],cex=1.6)
-points(papio.LM3$L.W, papio.LM3$B.W,
-       pch=18,col=fill.10[8],cex=1.6)
-legend("topleft", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
 
 
 # no pooling of tooth positions is justified
@@ -173,7 +100,33 @@ stripchart(KI ~ Side, vertical = TRUE, data = UvL.G.KI,
 legend("topleft", legend=c("Lower","Upper"), pch=16, col=c("blue", "red"))
 
 
+####################### band width ###
+# comparison between functional and guiding sides
+# par(mfrow=c(2,2)) #800X760
+# # upper K index
+# plot(papio.UM1$B.W, papio.UM1$L.W,
+#      xlim=c(50,250),ylim=c(50,250),pch=18,col=fill.10[2],cex=1.6,
+#      main = "Upper", xlab = "Guiding avg BW", ylab = "Functional avg BW")
+# abline(a=0,b=1)
+# points(papio.UM2$B.W, papio.UM2$L.W,
+#        pch=18,col=fill.10[5],cex=1.6)
+# points(papio.UM3$B.W, papio.UM3$L.W,
+#        pch=18,col=fill.10[8],cex=1.6)
+# 
+# # Lower K index
+# plot(papio.LM1$L.W, papio.LM1$B.W,
+#      xlim=c(50,250),ylim=c(50,250),pch=18,col=fill.10[2],cex=1.6,
+#      main = "Lower", xlab = "Guiding avg BW", ylab = "Functional avg BW")
+# abline(a=0,b=1)
+# points(papio.LM2$L.W, papio.LM2$B.W,
+#        pch=18,col=fill.10[5],cex=1.6)
+# points(papio.LM3$L.W, papio.LM3$B.W,
+#        pch=18,col=fill.10[8],cex=1.6)
+# legend("topleft", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.2)
 
+
+
+# figure 9
 ###### upper M1 vs lower M1 ################
 par(mfrow=c(2,3)) #800X600
 # functional side
@@ -248,7 +201,82 @@ boxplot(G.W ~ Side, data = UvL.GW,
 stripchart(G.W ~ Side, vertical = TRUE, data = UvL.GW,
            method = "jitter", add = TRUE, cex = 1.3, pch = 16, col = c("blue","red"))
 
+# change this to HSB density?
+# Figure 10 band width comparisons for metameric trends Box plots
+par(mfrow=c(2,2)) #800X760
+
+boxplot(B.W ~ Tooth, data = papio.up.dat,
+        ylim=c(50,250), col=NULL, main = "Upper Buccal", ylab = "Average Band Width")
+stripchart(B.W ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+legend("topright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.3)
+
+boxplot(L.W ~ Tooth, data = papio.up.dat,
+        ylim=c(50,250), col=NULL, main = "Upper Lingual", ylab = "Average Band Width")
+stripchart(L.W ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(B.W ~ Tooth, data = papio.low.dat,
+        ylim=c(50,250), col=NULL, main = "Lower Buccal", ylab = "Average Band Width")
+stripchart(B.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(L.W ~ Tooth, data = papio.low.dat,
+        ylim=c(50,250), col=NULL, main = "Lower Lingual", ylab = "Average Band Width")
+stripchart(L.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+
+# Use HSB packing density
+
+par(mfrow=c(2,2)) #800X760
+
+boxplot(B.HSBD ~ Tooth, data = papio.up.dat,
+        ylim=c(4,18), col=NULL, main = "Upper Buccal", ylab = "Est. HSB density")
+stripchart(B.HSBD ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+legend("topright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.3)
+
+boxplot(L.HSBD ~ Tooth, data = papio.up.dat,
+        ylim=c(4,18), col=NULL, main = "Upper Lingual", ylab = "Est. HSB density")
+stripchart(L.HSBD ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(B.HSBD ~ Tooth, data = papio.low.dat,
+        ylim=c(4,18), col=NULL, main = "Lower Buccal", ylab = "Est. HSB density")
+stripchart(B.HSBD ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(L.HSBD ~ Tooth, data = papio.low.dat,
+        ylim=c(4,18), col=NULL, main = "Lower Lingual", ylab = "Est. HSB density")
+stripchart(L.HSBD ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
 ################## other figures #########################
+
+par(mfrow=c(2,2)) #800X760
+
+boxplot(B.KI ~ Tooth, data = papio.up.dat,
+        ylim=c(0,3), col=NULL, main = "Upper Buccal", ylab = "lnKI")
+stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(L.KI ~ Tooth, data = papio.up.dat,
+        ylim=c(0,3), col=NULL, main = "Upper Lingual", ylab = "lnKI")
+stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(B.KI ~ Tooth, data = papio.low.dat,
+        ylim=c(0,3), col=NULL, main = "Lower Buccal", ylab = "lnKI")
+stripchart(B.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+
+boxplot(L.KI ~ Tooth, data = papio.low.dat,
+        ylim=c(0,3), col=NULL, main = "Lower Lingual", ylab = "lnKI")
+stripchart(L.KI ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 18, cex = 1.5, col=fill.10[c(2,5,8)])
+legend("topright", legend=c("M1","M2","M3"), pch=18, col=fill.10[c(2,5,8)],cex=1.3)
+
 # comparison between functional and guiding sides
 par(mfrow=c(2,2)) #800X600
 # upper Diazone K
@@ -294,66 +322,81 @@ points(papio.LM3$L.Para.K, papio.LM3$B.Para.K,
        pch=18,col=fill.10[8],cex=2)
 
 
-
-
 # K values
 # Functional diazone upper
 par(mfrow=c(2,2)) #800X600
-boxplot(L.Dia.K ~ Tooth, data = papio.up.dat,
+boxplot(L.Dia.K ~ Tooth, data = papio.up.dat, ylim=c(30,120),
         main = "Metameric trend: Upper Func Diazone K")
 stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = papio.up.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Guiding diazone upper
-boxplot(B.Dia.K ~ Tooth, data = papio.up.dat,
+boxplot(B.Dia.K ~ Tooth, data = papio.up.dat,ylim=c(30,120),
         main = "Metameric trend: Upper Guid Diazone K")
 stripchart(B.Dia.K ~ Tooth, vertical = TRUE, data = papio.up.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Functional diazone lower
-boxplot(B.Dia.K ~ Tooth, data = papio.low.dat,
+boxplot(B.Dia.K ~ Tooth, data = papio.low.dat,ylim=c(30,120),
         main = "Metameric trend: Lower Func Diazone K")
 stripchart(B.Dia.K ~ Tooth, vertical = TRUE, data = papio.low.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Guiding diazone lower
-boxplot(L.Dia.K ~ Tooth, data = papio.low.dat,
+boxplot(L.Dia.K ~ Tooth, data = papio.low.dat,ylim=c(30,120),
         main = "Metameric trend: Lower Guid Diazone K")
 stripchart(L.Dia.K ~ Tooth, vertical = TRUE, data = papio.low.dat,
            method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # plots in supplementary
-# Diazone and parazone width
-
-boxplot(L.Dia.W ~ Tooth, data = papio.up.dat,
+# Diazone and parazone width Fig S1
+par(mfrow=c(4,2)) #860X500
+boxplot(L.Dia.W ~ Tooth, data = papio.up.dat,ylim=c(20,140), ylab = "Diazone W",
         main = "Metameric trend: Upper Func Diazone W")
+stripchart(L.Dia.W ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Guiding diazone upper
-boxplot(B.Dia.W ~ Tooth, data = papio.up.dat,
+boxplot(B.Dia.W ~ Tooth, data = papio.up.dat,ylim=c(20,140), ylab = "Diazone W",
         main = "Metameric trend: Upper Guid Diazone W")
+stripchart(B.Dia.W ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Functional diazone lower
-boxplot(B.Dia.W ~ Tooth, data = papio.low.dat,
+boxplot(B.Dia.W ~ Tooth, data = papio.low.dat,ylim=c(20,140), ylab = "Diazone W",
         main = "Metameric trend: Lower Func Diazone W")
+stripchart(B.Dia.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Guiding diazone lower
-boxplot(L.Dia.W ~ Tooth, data = papio.low.dat,
+boxplot(L.Dia.W ~ Tooth, data = papio.low.dat,ylim=c(20,140), ylab = "Diazone W",
         main = "Metameric trend: Lower Guid Diazone W")
+stripchart(L.Dia.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
-boxplot(L.Dia.W ~ Tooth, data = papio.up.dat,
-        main = "Metameric trend: Upper Func Diazone W")
+# parazone
+boxplot(L.Para.W ~ Tooth, data = papio.up.dat,ylim=c(20,140), ylab = "Parazone W",
+        main = "Metameric trend: Upper Func Parazone W")
+stripchart(L.Para.W ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Guiding diazone upper
-boxplot(B.Dia.W ~ Tooth, data = papio.up.dat,
-        main = "Metameric trend: Upper Guid Diazone W")
+boxplot(B.Para.W ~ Tooth, data = papio.up.dat,ylim=c(20,140), ylab = "Parazone W",
+        main = "Metameric trend: Upper Guid Parazone W")
+stripchart(B.Para.W ~ Tooth, vertical = TRUE, data = papio.up.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Functional diazone lower
-boxplot(B.Dia.W ~ Tooth, data = papio.low.dat,
-        main = "Metameric trend: Lower Func Diazone W")
+boxplot(B.Para.W ~ Tooth, data = papio.low.dat,ylim=c(20,140), ylab = "Parazone W",
+        main = "Metameric trend: Lower Func Parazone W")
+stripchart(B.Para.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 # Guiding diazone lower
-boxplot(L.Dia.W ~ Tooth, data = papio.low.dat,
-        main = "Metameric trend: Lower Guid Diazone W")
+boxplot(L.Para.W ~ Tooth, data = papio.low.dat,ylim=c(20,140), ylab = "Parazone W",
+        main = "Metameric trend: Lower Guid Parazone W")
+stripchart(L.Para.W ~ Tooth, vertical = TRUE, data = papio.low.dat,
+           method = "jitter", add = TRUE, pch = 20, cex = 1.5)
 
 
 # generate correlation matrices for visualization
